@@ -7,7 +7,6 @@ def generator(n=0, maximun=10):
             return 'terminou'
 
 
-
 gen = generator()
 # print(gen.__iter__())
 # print(next(gen))
