@@ -2,6 +2,7 @@ def print_iter(iterator):
     print(*list(iterator), sep='\n')
     print()
 
+
 produtos = [
     {'nome': 'Produto 5', 'preco': 10.00},
     {'nome': 'Produto 1', 'preco': 22.32},
