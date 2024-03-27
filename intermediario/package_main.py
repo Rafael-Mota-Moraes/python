@@ -1,4 +1,4 @@
 from sys import path
-from package import modulo
-print(*path, sep='\n')
-print(modulo.nome)
+import package
+# print(*path, sep='\n')
+print(package.nome)
