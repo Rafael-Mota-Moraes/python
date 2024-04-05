@@ -19,4 +19,12 @@ def recursiva(inicio=0, fim=10):
     return recursiva(inicio, fim)
 
 
+def fatorial(num):
+    if num <= 1:
+        return 1
+
+    return num * fatorial(num - 1)
+
+
 print(recursiva())
+print("Fatorial:", fatorial(5))
