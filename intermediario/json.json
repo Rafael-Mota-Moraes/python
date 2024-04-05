@@ -1,0 +1,23 @@
+{
+  "nome": "Rafael",
+  "sobrenome": "Moreira",
+  "enderecos": [
+    {
+      "rua": "Av. Principal",
+      "numero": 55
+    },
+    {
+      "rua": "Av. Secund\u00e1ria",
+      "numero": 44
+    }
+  ],
+  "altura": 1.7,
+  "numeros_preferidos": [
+    5,
+    10,
+    15,
+    20
+  ],
+  "dev": true,
+  "nada": null
+}
