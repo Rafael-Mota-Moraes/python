@@ -31,3 +31,7 @@ print(delta)
 print(data_fim + relativedelta(seconds=60))
 delta = relativedelta(data_fim, data_inicio)
 print(delta)
+
+# data = datetime(2022, 12, 13, 7, 59, 23)
+data = datetime.strptime('2022-12-13 07:59:23', '%Y-%m-%d %H:%M:%S')
+print(data.strftime('%d/%m/%Y'), data.hour)
