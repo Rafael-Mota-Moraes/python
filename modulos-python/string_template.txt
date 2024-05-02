@@ -1,0 +1,7 @@
+Olá, $nome,
+
+$valor
+no dia $data
+
+Atenciosamente,
+${empresa}
