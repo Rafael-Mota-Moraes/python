@@ -4,6 +4,7 @@ import sys
 from PySide6.QtGui import QIcon
 from variables import WINDOW_ICON_PATH
 from display import Display
+from info import Info
 
 
 def temp_label(texto):
@@ -21,6 +22,10 @@ if __name__ == '__main__':
     icon = QIcon(str(WINDOW_ICON_PATH))
     window.setWindowIcon(icon)
     app.setWindowIcon(icon)
+
+    # Info
+    info = Info('2.0 ^ 2 = 1024.0')
+    window.addToVLayout(info)
 
     # Display
     display = Display()
