@@ -6,7 +6,7 @@ from variables import WINDOW_ICON_PATH
 from display import Display
 from info import Info
 from styles import setupTheme
-from buttons import Button, ButtonsGrid
+from buttons import ButtonsGrid
 
 
 def temp_label(texto):
