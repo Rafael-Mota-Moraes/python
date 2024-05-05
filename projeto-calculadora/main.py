@@ -6,7 +6,7 @@ from variables import WINDOW_ICON_PATH
 from display import Display
 from info import Info
 from styles import setupTheme
-from buttons import Button
+from buttons import Button, ButtonsGrid
 
 
 def temp_label(texto):
@@ -28,15 +28,18 @@ if __name__ == '__main__':
 
     # Info
     info = Info('2.0 ^ 2 = 1024.0')
-    window.addToVLayout(info)
+    window.addWidgetToVLayout(info)
 
     # Display
     display = Display()
-    window.addToVLayout(display)
+    window.addWidgetToVLayout(display)
 
-    # Button
-    button = Button('Texto do botão')
-    window.addToVLayout(button)
+    # Grid
+    buttonsGrid = ButtonsGrid()
+    window.vLayout.addLayout(buttonsGrid)
+
+    button1 = Button('0')
+    buttonsGrid.addWidget(button1, 0, 0)
 
     # Executa tudo
     window.adjustFixedSize()
