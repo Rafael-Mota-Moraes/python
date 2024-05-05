@@ -5,6 +5,7 @@ from PySide6.QtGui import QIcon
 from variables import WINDOW_ICON_PATH
 from display import Display
 from info import Info
+from styles import setupTheme
 
 
 def temp_label(texto):
@@ -17,6 +18,7 @@ if __name__ == '__main__':
     # Cria aplicação
     app = QApplication(sys.argv)
     window = MainWindow()
+    setupTheme(app)
 
     # Define o icone
     icon = QIcon(str(WINDOW_ICON_PATH))
