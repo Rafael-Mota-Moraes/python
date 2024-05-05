@@ -6,6 +6,7 @@ from variables import WINDOW_ICON_PATH
 from display import Display
 from info import Info
 from styles import setupTheme
+from buttons import Button
 
 
 def temp_label(texto):
@@ -31,8 +32,11 @@ if __name__ == '__main__':
 
     # Display
     display = Display()
-    display.setPlaceholderText('Digite algo')
     window.addToVLayout(display)
+
+    # Button
+    button = Button('Texto do botão')
+    window.addToVLayout(button)
 
     # Executa tudo
     window.adjustFixedSize()
