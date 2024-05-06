@@ -36,12 +36,12 @@ class ButtonsGrid(QGridLayout):
         self.info = info
         self.display = display
         self._equation = ''
-        self._equationInicialValue = 'Sua conta'
+        self._equationInitialValue = 'Sua conta'
         self._left = None
         self._right = None
         self._op = None
 
-        self.equation = self._equationInicialValue
+        self.equation = self._equationInitialValue
         self._makeGrid()
 
     @property
@@ -84,6 +84,12 @@ class ButtonsGrid(QGridLayout):
                 button, self._makeSlot(self._operatorClicked, button)
             )
 
+        if text in '=':
+            self._connectButtonClicked(
+                button,
+                self._eq
+            )
+
     def _makeSlot(self, func, *args, **kwargs):
         @ Slot(bool)
         def realSlot(_):
@@ -121,3 +127,24 @@ class ButtonsGrid(QGridLayout):
 
         self._op = buttonText
         self.equation = f'{self._left} {self._op} ??'
+
+    def _eq(self):
+        displayText = self.display.text()
+
+        if not isValidNumber(displayText):
+            print('Sem nada para a direita.')
+            return
+
+        self._right = float(displayText)
+        self.equation = f'{self._left} {self._op} {self._right}'
+        result = 0.0
+        try:
+            result = eval(self.equation)
+            print(result)
+        except ZeroDivisionError:
+            print('ZeroDivisionError')
+
+        self.display.clear()
+        self.info.setText(f'{self.equation} = {result:.2f}')
+        self._left = result
+        self._right = None
