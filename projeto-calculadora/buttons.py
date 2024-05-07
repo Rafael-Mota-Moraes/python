@@ -58,7 +58,12 @@ class ButtonsGrid(QGridLayout):
         self._equation = value
         self.info.setText(value)
 
+    def apagar(self):
+        print('Sinal recebido por "apagar" em', type(self).__name__)
+
     def _makeGrid(self):
+        self.display.eqRequested.connect(self.apagar)
+
         for rowNumber, row in enumerate(self._gridMask):
             for columnNumber, buttonText in enumerate(row):
                 button = Button(buttonText)
@@ -92,7 +97,7 @@ class ButtonsGrid(QGridLayout):
                 button, self._makeSlot(self._operatorClicked, button)
             )
 
-        if text in '=':
+        if text == '=':
             self._connectButtonClicked(
                 button,
                 self._eq
