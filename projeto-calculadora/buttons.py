@@ -62,7 +62,9 @@ class ButtonsGrid(QGridLayout):
         print('Sinal recebido por "apagar" em', type(self).__name__)
 
     def _makeGrid(self):
-        self.display.eqRequested.connect(self.apagar)
+        self.display.eqPressed.connect(self.apagar)
+        self.display.delPressed.connect(self.display.backspace)
+        self.display.clearPressed.connect(self.apagar)
 
         for rowNumber, row in enumerate(self._gridMask):
             for columnNumber, buttonText in enumerate(row):
