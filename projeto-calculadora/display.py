@@ -31,12 +31,12 @@ class Display(QLineEdit):
         isDelete = key in [KEYS.Key_Backspace, KEYS.Key_Delete]
         isEsc = key in [KEYS.Key_Escape]
 
-        if isEnter:
-            print('Enter pressionado, sinal emitido', type(self).__name__)
+        if isEnter or text == '=':
+            print(f'EQ {text} pressionado, sinal emitido', type(self).__name__)
             self.eqPressed.emit()
             return event.ignore()
 
-        if isDelete:
+        if isDelete or text == 'C' or text == 'c':
             print('isDelete pressionado, sinal emitido', type(self).__name__)
             self.delPressed.emit()
             return event.ignore()
