@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QPushButton, QGridLayout, QWidget
 from PySide6.QtCore import Slot
 from variables import MEDIUM_FONT_SIZE
-from utils import isNumOrDot, isEmpty, isValidNumber
+from utils import isNumOrDot, isEmpty, isValidNumber, convertToNumber
 from typing import TYPE_CHECKING
 import math
 
@@ -34,7 +34,7 @@ class ButtonsGrid(QGridLayout):
             ['7', '8', '9', '*'],
             ['4', '5', '6', '-'],
             ['1', '2', '3', '+'],
-            ['',  '0', '.', '='],
+            ['N',  '0', '.', '='],
         ]
 
         self.info = info
@@ -42,8 +42,8 @@ class ButtonsGrid(QGridLayout):
         self.window = window
         self._equation = ''
         self._equationInitialValue = 'Sua conta'
-        self._left: float | None = None
-        self._right: float | None = None
+        self._left: convertToNumber | None = None
+        self._right: convertToNumber | None = None
         self._op = None
 
         self.equation = self._equationInitialValue
@@ -93,8 +93,11 @@ class ButtonsGrid(QGridLayout):
         if text.lower() == 'c':
             self._connectButtonClicked(button, self._clear)
 
-        if text == 'D':
+        if text.lower() == 'D':
             self._connectButtonClicked(button, self.display.backspace)
+
+        if text == 'N':
+            self._connectButtonClicked(button, self._invertNumber)
 
         if text in '+-/*^Pp':
             self._connectButtonClicked(
@@ -106,6 +109,17 @@ class ButtonsGrid(QGridLayout):
                 button,
                 self._eq
             )
+
+    @Slot()
+    def _invertNumber(self):
+        displayText = self.display.text()
+
+        if not isValidNumber(displayText):
+            return
+
+        number = convertToNumber(displayText) * -1
+
+        self.display.setText(str(number))
 
     @Slot()
     def _makeSlot(self, func, *args, **kwargs):
@@ -142,7 +156,7 @@ class ButtonsGrid(QGridLayout):
             return
 
         if self._left is None:
-            self._left = float(displayText)
+            self._left = convertToNumber(displayText)
 
         self._op = text
         self.equation = f'{self._left} {self._op} ??'
@@ -155,13 +169,13 @@ class ButtonsGrid(QGridLayout):
             self._showError('Você não digitou o outro número da conta.')
             return
 
-        self._right = float(displayText)
+        self._right = convertToNumber(displayText)
         self.equation = f'{self._left} {self._op} {self._right}'
         result = 'error'
 
         try:
             numbersIsNotNone = self._left is not None and self._right is not None
-            if '^' in self.equation and numbersIsNotNone and isinstance(self._left, float):
+            if '^' in self.equation and numbersIsNotNone and isinstance(self._left, convertToNumber):
                 result = math.pow(self._left, self._right)
             else:
                 result = eval(self.equation)
