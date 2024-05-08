@@ -63,7 +63,7 @@ class ButtonsGrid(QGridLayout):
 
     def _makeGrid(self):
         self.display.eqPressed.connect(self._eq)
-        self.display.delPressed.connect(self.display.backspace)
+        self.display.delPressed.connect(self.backspace)
         self.display.clearPressed.connect(self._clear)
         self.display.inputPressed.connect(self._insertToDisplay)
         self.display.operatorPressed.connect(self._configLeftOp)
@@ -136,6 +136,7 @@ class ButtonsGrid(QGridLayout):
             return
 
         self.display.insert(text)
+        self.display.setFocus()
 
     @Slot()
     def _clear(self):
@@ -144,11 +145,13 @@ class ButtonsGrid(QGridLayout):
         self._op = None
         self.equation = self._equationInitialValue
         self.display.clear()
+        self.display.setFocus()
 
     @Slot()
     def _configLeftOp(self, text):
         displayText = self.display.text()  # Deverá ser o número _left
         self.display.clear()  # Limpa o display
+        self.display.setFocus()
 
         # se a pessoa clicou no operador sem precionar qualquer número
         if not isValidNumber(displayText) and self._left is None:
@@ -165,7 +168,7 @@ class ButtonsGrid(QGridLayout):
     def _eq(self):
         displayText = self.display.text()
 
-        if not isValidNumber(displayText):
+        if not isValidNumber(displayText) or self._left is None:
             self._showError('Você não digitou o outro número da conta.')
             return
 
@@ -174,8 +177,7 @@ class ButtonsGrid(QGridLayout):
         result = 'error'
 
         try:
-            numbersIsNotNone = self._left is not None and self._right is not None
-            if '^' in self.equation and numbersIsNotNone and isinstance(self._left, convertToNumber):
+            if '^' in self.equation and isinstance(self._left, (int, float)):
                 result = math.pow(self._left, self._right)
             else:
                 result = eval(self.equation)
@@ -191,11 +193,17 @@ class ButtonsGrid(QGridLayout):
 
         if result == 'error':
             self._left = None
+        self.display.setFocus()
 
     def _makeDialog(self, text: str):
         msgBox = self.window.makeMsgBox()
         msgBox.setText(text)
         return msgBox
+
+    @Slot()
+    def backspace(self):
+        self.display.backspace()
+        self.display.setFocus()
 
     def _showError(self, text):
         msgBox = self._makeDialog(text)
